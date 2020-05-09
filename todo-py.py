@@ -12,18 +12,19 @@ import sys
 import fixpath
 from colorama import init, Fore, Back, Style
 
-init()
+init(convert=True)
 
 # Fore, Back and Style are convenience classes for the constant ANSI strings that set
 #     the foreground, background and style. The don't have any magic of their own.
-FORES = [Fore.BLACK, Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE]
-BACKS = [Back.BLACK, Back.RED, Back.GREEN, Back.YELLOW, Back.BLUE, Back.MAGENTA, Back.CYAN, Back.WHITE]
+FORES = [Fore.BLACK, Fore.RED, Fore.GREEN, Fore.YELLOW,
+         Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE]
+BACKS = [Back.BLACK, Back.RED, Back.GREEN, Back.YELLOW,
+         Back.BLUE, Back.MAGENTA, Back.CYAN, Back.WHITE]
 STYLES = [Style.DIM, Style.NORMAL, Style.BRIGHT]
 
 NAMES = {
     Fore.BLACK: 'black', Fore.RED: 'red', Fore.GREEN: 'green', Fore.YELLOW: 'yellow', Fore.BLUE: 'blue',
-    Fore.MAGENTA: 'magenta', Fore.CYAN: 'cyan', Fore.WHITE: 'white'
-    , Fore.RESET: 'reset',
+    Fore.MAGENTA: 'magenta', Fore.CYAN: 'cyan', Fore.WHITE: 'white', Fore.RESET: 'reset',
     Back.BLACK: 'black', Back.RED: 'red', Back.GREEN: 'green', Back.YELLOW: 'yellow', Back.BLUE: 'blue',
     Back.MAGENTA: 'magenta', Back.CYAN: 'cyan', Back.WHITE: 'white',
     Back.RESET: 'reset'
@@ -37,7 +38,8 @@ print()
 
 # make a row for each background color
 for background in BACKS:
-    sys.stdout.write('%s%-7s%s %s' % (background, NAMES[background], Back.RESET, background))
+    sys.stdout.write('%s%-7s%s %s' %
+                     (background, NAMES[background], Back.RESET, background))
     # make a column for each foreground color
     for foreground in FORES:
         sys.stdout.write(foreground)
@@ -62,4 +64,9 @@ for do in doing:
     print(Fore.BLUE + do)
 
 
+# add task
 
+# view task
+
+while is_loop:
+    pass
