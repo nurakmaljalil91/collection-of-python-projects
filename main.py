@@ -27,13 +27,12 @@ doing = ['add pic']
 done = ['update facebook']
 
 
-text = font.render(todo[0], True, RED)
+text = []
 
-
-def select_rect():
-    pass
-
-
+print(len(todo))
+for i in range(0, len(todo)):
+    text[i] = font.render(todo[i], True, RED)
+    print(i)
 def draw_grid(window, scale, color):
     for x in range(0, WIDTH, int(TILESIZE * scale)):
         pygame.draw.line(window, color, (x, 0), (x, HEIGHT))
@@ -76,8 +75,11 @@ while is_running:
     draw_rect(window, 30, 45, 600, 600, YELLOW)
     draw_rect(window, 660, 45, 600, 600, YELLOW)
     pygame.draw.rect(window, YELLOW2, (x, y, 600, 30))
-    window.blit(text, (45, 50))
-    window.blit(text, (45, 50 + 30))
+    # window.blit(text, (45, 50))
+    # window.blit(text, (45, 50 + 30))
+    for t in text:
+        window.blit(t, (45, 50 + j))
+        j += 30
 
     pygame.display.flip()
     pygame.display.update()
