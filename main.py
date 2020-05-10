@@ -1,6 +1,10 @@
 import pygame
 from settings import *
 
+pygame.init()
+
+pygame.font.init()
+
 (width, height) = (WIDTH, HEIGHT)
 
 window = pygame.display.set_mode((width, height))
@@ -11,7 +15,8 @@ pygame.display.flip()
 
 is_running = True
 
-font = pygame.font.SysFont("comicsansms", 72)
+font = pygame.font.SysFont("comicsansms", 15)
+
 
 rect = pygame.Surface((720, 480))
 pygame.draw.rect(rect, RED, (0, 0, 720, 480), 1)
@@ -19,6 +24,10 @@ pygame.draw.rect(rect, RED, (0, 0, 720, 480), 1)
 todo = ['git init', 'make breakfast']
 doing = ['add pic']
 done = ['update facebook']
+
+
+text = font.render(todo[0], True, RED)
+
 
 def draw_grid(window, scale, color):
     for x in range(0, WIDTH, int(TILESIZE * scale)):
@@ -42,11 +51,13 @@ while is_running:
             if event.key == pygame.K_ESCAPE:
                 is_running = False
         print(pygame.mouse.get_pos())
-    draw_grid(window, 1, DARKGRAY)
+    # draw_grid(window, 1, DARKGRAY)
     # window.blit(rect,(30,30))
     # pygame.draw.rect(window, RED, (30,30, 720,480))
     draw_rect(window, 30, 45, 600, 600, RED)
     draw_rect(window, 660, 45, 600, 600, BLUE)
+    window.blit(text, (48,63))
+
     pygame.display.flip()
     pygame.display.update()
 
