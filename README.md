@@ -1,6 +1,6 @@
 # TODO
 
-1. todo python
+1. todo python [x]
 2. learn aspdotnet
 3. cbit-game engine
 4. learn blender
