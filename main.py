@@ -15,7 +15,8 @@ pygame.display.flip()
 
 is_running = True
 
-font = pygame.font.SysFont("comicsansms", 15)
+# font = pygame.font.SysFont("comicsansms", 15)
+font = pygame.font.Font('res/JetBrainsMono-Regular.ttf', 15)
 
 
 rect = pygame.Surface((720, 480))
@@ -46,8 +47,10 @@ def draw_rect(window, x, y, width, height, color):
     pygame.draw.line(window, color, (x, y + height), (x + height, y + height))
     pygame.draw.line(window, color, (x + width, y), (x + height, y + height))
 
+
 x = 30
 y = 45
+
 while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -72,8 +75,9 @@ while is_running:
     # pygame.draw.rect(window, RED, (30,30, 720,480))
     draw_rect(window, 30, 45, 600, 600, YELLOW)
     draw_rect(window, 660, 45, 600, 600, YELLOW)
-    pygame.draw.rect(window, YELLOW, (x, y, 600, 30))
-    window.blit(text, (48, 63))
+    pygame.draw.rect(window, YELLOW2, (x, y, 600, 30))
+    window.blit(text, (45, 50))
+    window.blit(text, (45, 50 + 30))
 
     pygame.display.flip()
     pygame.display.update()
