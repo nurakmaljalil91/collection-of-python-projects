@@ -11,10 +11,14 @@ pygame.display.flip()
 
 is_running = True
 
+font = pygame.font.SysFont("comicsansms", 72)
 
 rect = pygame.Surface((720, 480))
 pygame.draw.rect(rect, RED, (0, 0, 720, 480), 1)
 
+todo = ['git init', 'make breakfast']
+doing = ['add pic']
+done = ['update facebook']
 
 def draw_grid(window, scale, color):
     for x in range(0, WIDTH, int(TILESIZE * scale)):
@@ -24,10 +28,10 @@ def draw_grid(window, scale, color):
 
 
 def draw_rect(window, x, y, width, height, color):
-    pygame.draw.line(window, color, (x, y), (x, x + height))
-    pygame.draw.line(window, color, (x, y), (y + width, y))
-    pygame.draw.line(window, color, (x , x + height),(x + width, x+ height) )
-    pygame.draw.line(window, color, (y + width, y),(y + width, y+height) )
+    pygame.draw.line(window, color, (x, y), (x + width, y))
+    pygame.draw.line(window, color, (x, y), (x, y + height))
+    pygame.draw.line(window, color, (x, y + height), (x + height, y + height))
+    pygame.draw.line(window, color, (x + width, y), (x + height, y + height))
 
 
 while is_running:
@@ -41,7 +45,8 @@ while is_running:
     draw_grid(window, 1, DARKGRAY)
     # window.blit(rect,(30,30))
     # pygame.draw.rect(window, RED, (30,30, 720,480))
-    draw_rect(window, 30, 30, 720, 480, RED)
+    draw_rect(window, 30, 45, 600, 600, RED)
+    draw_rect(window, 660, 45, 600, 600, BLUE)
     pygame.display.flip()
     pygame.display.update()
 
