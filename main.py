@@ -1,5 +1,6 @@
 import pygame
 import json
+import pygame_textinput
 from settings import *
 
 pygame.init()
@@ -23,7 +24,8 @@ sel_y = 60  # select y position
 todo_color = YELLOW
 header = 'PS D:/Onedrive/Dev/todo-py>py main.py'
 act_input = False
-txt_inp = ''
+# Create TextInput-object
+textinput = pygame_textinput.TextInput(':','res/JetBrainsMono-Regular.ttf',15, True, YELLOW, YELLOW)
 
 header_render = font.render(header, True, YELLOW)
 
@@ -53,37 +55,41 @@ def draw_rect(window, x, y, width, height, color):
     pygame.draw.line(window, color, (x + width, y), (x + width, y + height))
 
 
-pygame.key.set_repeat(60, 60)  # allow keyboard repeat press (delay,interval)
+# pygame.key.set_repeat(60, 60)  # allow keyboard repeat press (delay,interval)
 # app loop
 while is_running:
-    for event in pygame.event.get():
+    events = pygame.event.get()
+
+    for event in events:
         if event.type == pygame.QUIT:
             is_running = False
         if event.type == pygame.KEYDOWN:
-            # if event.key == pygame.K_ESCAPE:
-            #     is_running = False
             if event.key == pygame.K_DOWN or event.key == pygame.K_j:
-                sel_y += 30
+                if not act_input:
+                    sel_y += 30
             if event.key == pygame.K_UP or event.key == pygame.K_k:
-                sel_y -= 30
+                if not act_input:
+                    sel_y -= 30
             if event.key == pygame.K_RIGHT or event.key == pygame.K_l:
-                sel_x = 660
-                sel_y = 60
+                if not act_input:
+                    sel_x = 660
+                    sel_y = 60
             if event.key == pygame.K_LEFT or event.key == pygame.K_h:
-                sel_x = 30
-                sel_y = 60
+                if not act_input:
+                    sel_x = 30
+                    sel_y = 60
             if event.key == pygame.K_ESCAPE:
                 act_input = True
-               
-            if act_input:
-                if event.key == pygame.K_RETURN:
-                    txt_inp = ''
-                elif event.key == pygame.K_BACKSPACE:
-                    txt_inp = txt_inp[:-1]
-                else:
-                    txt_inp += event.unicode
 
-        print(pygame.mouse.get_pos())
+            print(pygame.mouse.get_pos())
+    if act_input:
+        if textinput.update(events):
+            print(textinput.get_text())
+            textinput.clear_text()
+            act_input = False
+            if textinput.get_text() == ':quit!':
+                is_running = False
+
     window.fill(BLACK)  # reset background color
     # draw background grids for easy measurement
     draw_grid(window, 1, DARKGRAY)
@@ -92,15 +98,18 @@ while is_running:
     draw_rect(window, 660, 60, 600, 600, YELLOW)  # left rectangle container
     draw_rect(window, 0, 675, 1279, 30, YELLOW)  # input command rectangle
     pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30))  # select rect
-    txt_inp_ren = font.render(txt_inp,True, YELLOW)
-    window.blit(txt_inp_ren,(3,678))
+    
+    # window.blit(txt_inp_ren, (3, 678))
+    # Blit its surface onto the screen
+    window.blit(textinput.get_surface(), (3, 678))
     next_line = 0
     for t in range(0, len(todo_render)):
         window.blit(todo_render[t], (45, 65 + next_line))
         window.blit(date_render[t], (500, 65 + next_line))
         next_line += 30
-    if txt_inp == ':q':
-        is_running = False
+    
+    # if txt_inp == ':addTask!':
+    #     txt_inp = ':'
     pygame.display.flip()
     pygame.display.update()
 
