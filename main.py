@@ -21,9 +21,10 @@ rect = pygame.Surface((720, 480))
 pygame.draw.rect(rect, RED, (0, 0, 720, 480), 1)
 
 # global variables
-todo_render = [] # list of task to render
-sel_x = 30 # select x position
-sel_y = 60 # select y position
+todo_render = []  # list of task to render
+sel_x = 30  # select x position
+sel_y = 60  # select y position
+todo_color = YELLOW
 
 # TODO: get the data from json
 todo = ['git init', 'make breakfast']
@@ -31,13 +32,20 @@ doing = ['add pic']
 done = ['update facebook']
 
 with open('data.json') as f:
-  data = json.load(f)
+    data = json.load(f)
+
+for d in data:
+    print(d['task'])
+    todo_render.append(font.render(d['task'],True, todo_color))
 
 # add the list of todo to be render
-for i in range(0, len(todo)):
-    todo_render.append(font.render(todo[i], True, RED))
-    
+# for i in range(0, len(todo)):
+#     todo_render.append(font.render(todo[i], True, todo_color))
+
+
 # draw background grid
+
+
 def draw_grid(window, scale, color):
     for x in range(0, WIDTH, int(TILESIZE * scale)):
         pygame.draw.line(window, color, (x, 0), (x, HEIGHT))
@@ -45,11 +53,14 @@ def draw_grid(window, scale, color):
         pygame.draw.line(window, color, (0, y), (WIDTH, y))
 
 # draw rectangle
+
+
 def draw_rect(window, x, y, width, height, color):
     pygame.draw.line(window, color, (x, y), (x + width, y))
     pygame.draw.line(window, color, (x, y), (x, y + height))
     pygame.draw.line(window, color, (x, y + height), (x + width, y + height))
     pygame.draw.line(window, color, (x + width, y), (x + width, y + height))
+
 
 # app loop
 while is_running:
@@ -65,17 +76,19 @@ while is_running:
                 sel_y -= 30
             if event.key == pygame.K_RIGHT or event.key == pygame.K_l:
                 sel_x = 660
-                sel_y = 45
+                sel_y = 60
             if event.key == pygame.K_LEFT or event.key == pygame.K_h:
                 sel_x = 30
-                sel_y = 45
-        print(pygame.mouse.get_pos())
+                sel_y = 60
+        # print(pygame.mouse.get_pos())
     window.fill(BLACK)
-    draw_grid(window, 1, DARKGRAY) # draw background grids for easy measurement
+    # draw background grids for easy measurement
+    draw_grid(window, 1, DARKGRAY)
     draw_rect(window, 30, 60, 600, 600, YELLOW)  # right rectangle container
     draw_rect(window, 660, 60, 600, 600, YELLOW)  # left rectangle container
-    draw_rect(window,0,675,1279, 30, YELLOW) # command rectangle
-    pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30))  # select rectangle
+    draw_rect(window, 0, 675, 1279, 30, YELLOW)  # command rectangle
+    pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30)
+                     )  # select rectangle
 
     next_line = 0
     for t in range(0, len(todo_render)):
