@@ -1,4 +1,5 @@
 import pygame
+import json
 from settings import *
 
 pygame.init()
@@ -29,25 +30,28 @@ todo = ['git init', 'make breakfast']
 doing = ['add pic']
 done = ['update facebook']
 
+with open('data.json') as f:
+  data = json.load(f)
 
+# add the list of todo to be render
 for i in range(0, len(todo)):
     todo_render.append(font.render(todo[i], True, RED))
     
-
+# draw background grid
 def draw_grid(window, scale, color):
     for x in range(0, WIDTH, int(TILESIZE * scale)):
         pygame.draw.line(window, color, (x, 0), (x, HEIGHT))
     for y in range(0, HEIGHT, int(TILESIZE * scale)):
         pygame.draw.line(window, color, (0, y), (WIDTH, y))
 
-
+# draw rectangle
 def draw_rect(window, x, y, width, height, color):
     pygame.draw.line(window, color, (x, y), (x + width, y))
     pygame.draw.line(window, color, (x, y), (x, y + height))
     pygame.draw.line(window, color, (x, y + height), (x + width, y + height))
     pygame.draw.line(window, color, (x + width, y), (x + width, y + height))
 
-
+# app loop
 while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -70,14 +74,13 @@ while is_running:
     draw_grid(window, 1, DARKGRAY) # draw background grids for easy measurement
     draw_rect(window, 30, 60, 600, 600, YELLOW)  # right rectangle container
     draw_rect(window, 660, 60, 600, 600, YELLOW)  # left rectangle container
-    draw_rect(window,0,675,1279, 30, RED) # command rectangle
+    draw_rect(window,0,675,1279, 30, YELLOW) # command rectangle
     pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30))  # select rectangle
-    
 
-    j = 0
+    next_line = 0
     for t in range(0, len(todo_render)):
-        window.blit(todo_render[t], (45, 65 + j))
-        j += 30
+        window.blit(todo_render[t], (45, 65 + next_line))
+        next_line += 30
 
     pygame.display.flip()
     pygame.display.update()
