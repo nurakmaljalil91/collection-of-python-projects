@@ -19,19 +19,20 @@ font = pygame.font.Font('res/JetBrainsMono-Regular.ttf', 15)
 rect = pygame.Surface((720, 480))
 pygame.draw.rect(rect, RED, (0, 0, 720, 480), 1)
 
+# global variables
+todo_render = [] # list of task to render
+sel_x = 30 # select x position
+sel_y = 60 # select y position
+
 # TODO: get the data from json
 todo = ['git init', 'make breakfast']
 doing = ['add pic']
 done = ['update facebook']
 
 
-todo_render = []
-
-print(len(todo))
 for i in range(0, len(todo)):
     todo_render.append(font.render(todo[i], True, RED))
-    print(i)
-
+    
 
 def draw_grid(window, scale, color):
     for x in range(0, WIDTH, int(TILESIZE * scale)):
@@ -43,12 +44,9 @@ def draw_grid(window, scale, color):
 def draw_rect(window, x, y, width, height, color):
     pygame.draw.line(window, color, (x, y), (x + width, y))
     pygame.draw.line(window, color, (x, y), (x, y + height))
-    pygame.draw.line(window, color, (x, y + height), (x + height, y + height))
-    pygame.draw.line(window, color, (x + width, y), (x + height, y + height))
+    pygame.draw.line(window, color, (x, y + height), (x + width, y + height))
+    pygame.draw.line(window, color, (x + width, y), (x + width, y + height))
 
-
-x = 30
-y = 45
 
 while is_running:
     for event in pygame.event.get():
@@ -58,28 +56,27 @@ while is_running:
             if event.key == pygame.K_ESCAPE:
                 is_running = False
             if event.key == pygame.K_DOWN or event.key == pygame.K_j:
-                y += 30
+                sel_y += 30
             if event.key == pygame.K_UP or event.key == pygame.K_k:
-                y -= 30
+                sel_y -= 30
             if event.key == pygame.K_RIGHT or event.key == pygame.K_l:
-                x = 660
-                y = 45
+                sel_x = 660
+                sel_y = 45
             if event.key == pygame.K_LEFT or event.key == pygame.K_h:
-                x = 30
-                y = 45
+                sel_x = 30
+                sel_y = 45
         print(pygame.mouse.get_pos())
     window.fill(BLACK)
-    draw_grid(window, 1, DARKGRAY)
-    # window.blit(rect,(30,30))
-    # pygame.draw.rect(window, RED, (30,30, 720,480))
-    draw_rect(window, 30, 45, 600, 600, YELLOW) # right rectangle container
-    draw_rect(window, 660, 45, 600, 600, YELLOW) # left rectangle container
-    pygame.draw.rect(window, YELLOW2, (x, y, 600, 30))
-    # window.blit(text, (45, 50))
-    # window.blit(text, (45, 50 + 30))
+    draw_grid(window, 1, DARKGRAY) # draw background grids for easy measurement
+    draw_rect(window, 30, 60, 600, 600, YELLOW)  # right rectangle container
+    draw_rect(window, 660, 60, 600, 600, YELLOW)  # left rectangle container
+    draw_rect(window,0,675,1279, 30, RED) # command rectangle
+    pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30))  # select rectangle
+    
+
     j = 0
     for t in range(0, len(todo_render)):
-        window.blit(todo_render[t], (45, 50 + j))
+        window.blit(todo_render[t], (45, 65 + j))
         j += 30
 
     pygame.display.flip()
