@@ -17,11 +17,13 @@ font = pygame.font.Font('res/JetBrainsMono-Regular.ttf', 15)
 
 # global variables
 todo_render = []  # list of task to render
-date_render = [] # lisd of the task date
+date_render = []  # lisd of the task date
 sel_x = 30  # select x position
 sel_y = 60  # select y position
 todo_color = YELLOW
 header = 'PS D:/Onedrive/Dev/todo-py>py main.py'
+act_input = False
+txt_inp = ''
 
 header_render = font.render(header, True, YELLOW)
 
@@ -58,8 +60,8 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                is_running = False
+            # if event.key == pygame.K_ESCAPE:
+            #     is_running = False
             if event.key == pygame.K_DOWN or event.key == pygame.K_j:
                 sel_y += 30
             if event.key == pygame.K_UP or event.key == pygame.K_k:
@@ -70,23 +72,35 @@ while is_running:
             if event.key == pygame.K_LEFT or event.key == pygame.K_h:
                 sel_x = 30
                 sel_y = 60
-        # print(pygame.mouse.get_pos())
-    window.fill(BLACK) # reset background color
+            if event.key == pygame.K_ESCAPE:
+                act_input = True
+               
+            if act_input:
+                if event.key == pygame.K_RETURN:
+                    txt_inp = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    txt_inp = txt_inp[:-1]
+                else:
+                    txt_inp += event.unicode
+
+        print(pygame.mouse.get_pos())
+    window.fill(BLACK)  # reset background color
     # draw background grids for easy measurement
     draw_grid(window, 1, DARKGRAY)
     window.blit(header_render, (0, 3))
     draw_rect(window, 30, 60, 600, 600, YELLOW)  # right rectangle container
     draw_rect(window, 660, 60, 600, 600, YELLOW)  # left rectangle container
-    draw_rect(window, 0, 675, 1279, 30, YELLOW)  # command rectangle
-    pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30)
-                     )  # select rectangle
-
+    draw_rect(window, 0, 675, 1279, 30, YELLOW)  # input command rectangle
+    pygame.draw.rect(window, YELLOW2, (sel_x, sel_y, 600, 30))  # select rect
+    txt_inp_ren = font.render(txt_inp,True, YELLOW)
+    window.blit(txt_inp_ren,(3,678))
     next_line = 0
     for t in range(0, len(todo_render)):
         window.blit(todo_render[t], (45, 65 + next_line))
         window.blit(date_render[t], (500, 65 + next_line))
         next_line += 30
-
+    if txt_inp == ':q':
+        is_running = False
     pygame.display.flip()
     pygame.display.update()
 
