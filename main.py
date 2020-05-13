@@ -25,6 +25,9 @@ todo_color = YELLOW
 header = 'PS D:/Onedrive/Dev/todo-py>py main.py'
 act_input = False
 cn_add_tsk = False # allow to add task
+del_cn_add_tsk = False # allow to add task
+is_prs_inp = False
+read_task = ''
 # Create TextInput-object
 textinput = pygame_textinput.TextInput(':','res/JetBrainsMono-Regular.ttf',15, True, YELLOW, YELLOW)
 
@@ -39,6 +42,7 @@ with open('data.json') as f:
 def add_task(new_task):
     temp = {"id": 4,"item": new_task, "date":"13/05/2020"}
     print(temp)
+    del_cn_add_tsk = False
 
 # draw background grid
 def draw_grid(window, scale, color):
@@ -88,27 +92,52 @@ while is_running:
     if act_input:
         if textinput.update(events):
             print(textinput.get_text())
-            if textinput.get_text() == ':quit!':
-                is_running = False
-            if textinput.get_text() == ':q':
-                is_running = False
-            if textinput.get_text() == ':addTask':
-                cn_add_tsk = True
-                textinput.clear_text()
+            prs_inp = textinput.get_text()
+            textinput.clear_text()
+            is_prs_inp = True
             if cn_add_tsk:
-                add_task(textinput.get_text())
-                textinput.clear_text()
-            else:
-                textinput.clear_text()
+                read_task = textinput.get_text()
+            # if textinput.get_text() == ':quit!':
+            #     is_running = False
+            # if textinput.get_text() == ':q':
+            #     is_running = False
+            # if textinput.get_text() == ':addTask':
+            #     pygame.time.delay(1)
+            #     cn_add_tsk = True
+            #     textinput.clear_text()
+            # if del_cn_add_tsk:
+            #     add_task(textinput.get_text())
+            #     textinput.clear_text()
+            # else:
+            #     textinput.clear_text()
            
     # print(textinput.update(events))
-    # update here
 
+    # delay logic
+    # if cn_add_tsk:
+    #     del_cn_add_tsk = True
+    # if del_cn_add_tsk is False:
+    #     cn_add_tsk = True
+    
+    # other method of read input
+    if is_prs_inp:
+        if prs_inp == ':q':
+            is_running = False
+        if prs_inp == ':addTask':
+            cn_add_tsk = True
+            is_prs_inp = False
+        if cn_add_tsk:
+            if read_task is not '':
+                add_task(read_task)
+            cn_add_tsk = False
+            is_prs_inp = False
+    # update here
+    # print(del_cn_add_tsk)
     for d in data:
         todo_render.append(font.render(d['task'], True, todo_color))
         date_render.append(font.render(d['date'], True, todo_color))
 
-    
+    print(read_task)
     # render here
     # print(act_input)  
     window.fill(BLACK)  # reset background color
