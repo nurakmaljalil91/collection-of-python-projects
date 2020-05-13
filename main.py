@@ -37,7 +37,8 @@ with open('data.json') as f:
 
 
 def add_task(new_task):
-    pass
+    temp = {"id": 4,"item": new_task, "date":"13/05/2020"}
+    print(temp)
 
 # draw background grid
 def draw_grid(window, scale, color):
@@ -94,10 +95,12 @@ while is_running:
             if textinput.get_text() == ':addTask':
                 cn_add_tsk = True
                 textinput.clear_text()
-        
+            if cn_add_tsk:
+                add_task(textinput.get_text())
+                textinput.clear_text()
             else:
                 textinput.clear_text()
-               
+           
     # print(textinput.update(events))
     # update here
 
