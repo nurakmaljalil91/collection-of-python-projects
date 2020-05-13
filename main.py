@@ -24,6 +24,7 @@ sel_y = 60  # select y position
 todo_color = YELLOW
 header = 'PS D:/Onedrive/Dev/todo-py>py main.py'
 act_input = False
+cn_add_tsk = False # allow to add task
 # Create TextInput-object
 textinput = pygame_textinput.TextInput(':','res/JetBrainsMono-Regular.ttf',15, True, YELLOW, YELLOW)
 
@@ -33,11 +34,10 @@ header_render = font.render(header, True, YELLOW)
 with open('data.json') as f:
     data = json.load(f)
 
-for d in data:
-    print(d['date'])
-    todo_render.append(font.render(d['task'], True, todo_color))
-    date_render.append(font.render(d['date'], True, todo_color))
 
+
+def add_task(new_task):
+    pass
 
 # draw background grid
 def draw_grid(window, scale, color):
@@ -78,19 +78,35 @@ while is_running:
                 if not act_input:
                     sel_x = 30
                     sel_y = 60
-            if event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_1:
                 act_input = True
-                print('escape')
+            if event.key == pygame.K_2:
+                act_input = False
+                # print('escape')
             # print(pygame.mouse.get_pos())
     if act_input:
         if textinput.update(events):
             print(textinput.get_text())
-            textinput.clear_text()
-            act_input = False
             if textinput.get_text() == ':quit!':
                 is_running = False
-    print(textinput.update(events))
+            if textinput.get_text() == ':q':
+                is_running = False
+            if textinput.get_text() == ':addTask':
+                cn_add_tsk = True
+                textinput.clear_text()
         
+            else:
+                textinput.clear_text()
+               
+    # print(textinput.update(events))
+    # update here
+
+    for d in data:
+        todo_render.append(font.render(d['task'], True, todo_color))
+        date_render.append(font.render(d['date'], True, todo_color))
+
+    
+    # render here
     # print(act_input)  
     window.fill(BLACK)  # reset background color
     # draw background grids for easy measurement
@@ -110,6 +126,8 @@ while is_running:
         window.blit(date_render[t], (500, 65 + next_line))
         next_line += 30
     
+    todo_render.clear()
+    date_render.clear()
     # if txt_inp == ':addTask!':
     #     txt_inp = ':'
     pygame.display.flip()
