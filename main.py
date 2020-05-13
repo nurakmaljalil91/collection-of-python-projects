@@ -80,8 +80,8 @@ while is_running:
                     sel_y = 60
             if event.key == pygame.K_ESCAPE:
                 act_input = True
-
-            print(pygame.mouse.get_pos())
+                print('escape')
+            # print(pygame.mouse.get_pos())
     if act_input:
         if textinput.update(events):
             print(textinput.get_text())
@@ -89,7 +89,9 @@ while is_running:
             act_input = False
             if textinput.get_text() == ':quit!':
                 is_running = False
-
+    print(textinput.update(events))
+        
+    # print(act_input)  
     window.fill(BLACK)  # reset background color
     # draw background grids for easy measurement
     draw_grid(window, 1, DARKGRAY)
