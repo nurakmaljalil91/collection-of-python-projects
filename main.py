@@ -1,6 +1,7 @@
 import pygame
 import json
 import pygame_textinput
+from datetime import date
 from settings import *
 
 pygame.init()
@@ -42,8 +43,10 @@ with open('data.json') as f:
 
 
 def add_task(new_task):
-    temp = {"id": 4,"item": new_task, "date":"13/05/2020"}
+    today = date.today()
+    temp = {"id": 4,"item": new_task, "date":today.strftime('%Y-%b-%d')}
     print(temp)
+    
     
 
 # draw background grid
