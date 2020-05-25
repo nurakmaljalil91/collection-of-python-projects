@@ -1,10 +1,13 @@
 import json
 
 # main function
+
+
 def main():
-    is_running = True
-    is_saving = False
-    init()
+    # application variables
+    is_running = True  # is the app running
+    is_saving = False  # is the app is saving
+    init()  # initialize the app
     while is_running:
         print('>>Enter your command here')
         action = input('>>:')
@@ -13,9 +16,13 @@ def main():
         if action == 'q':
             if is_saving == False:
                 print('The application is not saving...save file?')
+        if action == 'help':
+            help()
         if action == 'show':
             show()
-        prin('')
+        if action == 'addTask':
+            addTask()
+        print('')
 
     print('TODO is exiting.......')
 
@@ -36,6 +43,15 @@ def init():
     print('Company :', company_name)  # show company name
     print('')
 
+
+def help():
+    print('1. help    -- show all the commands ')
+    print('2. show    -- show all the tasks ')
+    print('3. addTask -- add new task to tasks ')
+    print('4. quit!   -- quit without saving ')
+    print('')
+
+
 def show():
     with open('../data.json') as f:
         data = json.load(f)
@@ -48,6 +64,10 @@ def show():
             num_task, d['task'], d['date']))
         num_task += 1
     print('+-------------------------------------------------------------------------+')
+
+
+def addTask():
+    pass
 
 
 main()
