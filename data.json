@@ -2,6 +2,7 @@
   {
     "id": 1,
     "task": "apply job",
+    "status": "Ongoing",
     "start date": "12/12/2020",
     "end date": "12/12/2020"
   },
@@ -9,6 +10,7 @@
   {
     "id": 2,
     "task": "update linkedn",
+    "status": "Ongoing",
     "start date": "10/11/2020",
     "end date": "10/11/2020"
   },
@@ -16,6 +18,7 @@
   {
     "id": 3,
     "task": "attend seminar",
+    "status": "Ongoing",
     "start date": "02/02/2020",
     "end date": "02/02/2020"
   }
