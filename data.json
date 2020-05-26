@@ -2,18 +2,21 @@
   {
     "id": 1,
     "task": "apply job",
-    "date": "12/12/2020"
+    "start date": "12/12/2020",
+    "end date": "12/12/2020"
   },
 
   {
     "id": 2,
     "task": "update linkedn",
-    "date": "10/11/2020"
+    "start date": "10/11/2020",
+    "end date": "10/11/2020"
   },
 
   {
     "id": 3,
     "task": "attend seminar",
-    "date": "02/02/2020"
+    "start date": "02/02/2020",
+    "end date": "02/02/2020"
   }
 ]

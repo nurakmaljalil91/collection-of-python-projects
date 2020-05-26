@@ -1,4 +1,6 @@
 import json
+import time
+import os
 
 # main function
 
@@ -7,6 +9,7 @@ def main():
     # application variables
     is_running = True  # is the app running
     is_saving = False  # is the app is saving
+    is_timing = True
     init()  # initialize the app
     while is_running:
         print('>>Enter your command here')
@@ -15,6 +18,7 @@ def main():
             init()
         if action == 'quit!' or action == 'q!':
             is_running = False
+            is_timing = False
         if action == 'q':
             if is_saving == False:
                 print('The application is not saving...save file?')
@@ -24,6 +28,8 @@ def main():
             show()
         if action == 'addTask':
             addTask()
+        if action == 'showDateTime':
+            show_time()
         else:
             print('Command not found! (type help to show all commands)')
         print('')
@@ -60,18 +66,22 @@ def show():
     with open('../data.json') as f:
         data = json.load(f)
     print('+-------------------------------------------------------------------------+')
-    print('|\t Task \t\t\t| Start Date \t| End Date \t| Progress|')
+    print('|\t Task \t\t\t| Start Date \t| End Date \t| Progress   |')
     print('+-------------------------------------------------------------------------+')
     num_task = 1
     for d in data:
-        print('{}.{:30}|{:15}|         '.format(
-            num_task, d['task'], d['date']))
+        print('{}.{:30}|{:15}|{:15}|{:15}         '.format(num_task, d['task'], d['end date'],1,2 ))
         num_task += 1
     print('+-------------------------------------------------------------------------+')
 
 
 def addTask():
     pass
+
+
+def show_time():
+    localtime = time.asctime(time.localtime(time.time()))
+    print("Current time :", localtime)
 
 
 main()
