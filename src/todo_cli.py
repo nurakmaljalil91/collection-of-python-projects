@@ -18,26 +18,25 @@ def main():
         action = input('>>:')
         if action == 'init':
             init()
-        if action == 'quit!' or action == 'q!':
+        elif action == 'quit!' or action == 'q!':
             is_running = False
             is_timing = False
-        if action == 'q':
+        elif action == 'q':
             if is_saving == False:
                 print('The application is not saving...save file?')
-        if action == 'help':
+        elif action == 'help':
             help()
-        if action == 'show':
+        elif action == 'show':
             show()
-        if action == 'add':
+        elif action == 'add':
             add_task()
-        if action == 'time':
+        elif action == 'time':
             show_time()
-        if action == 'done':
+        elif action == 'done':
             done()
         else:
             print('Command not found! (type help to show all commands)')
-        print('')
-
+    print('')
     print('TODO is exiting.......')
 
 
@@ -118,14 +117,26 @@ def done():
 
 
 def add_task():
+    print('>>Add new task')
+    new_t = input('>>:')
     with open('../data.json', 'r+') as r:
         data = json.load(r)
         today = date.today()
-        new_data = {"unique id": generate_unique_id(), "id": 1, "task": "test", "status":"test","start date": "02/02/2020",
-    "end date": "02/02/2020"}
+        new_data = {}
+        new_data['unique id'] = generate_unique_id()
+        new_data['id'] = 4
+        new_data['task'] = new_t
+        new_data['status'] = 'Ongoing'
+        new_data['start date'] = today.strftime('%Y-%b-%d')
+        new_data['end date'] = today.strftime('%Y-%b-%d')
         data.append(new_data)
-        r.seek(0)
-        json.dump(data, r)
-    
+        #print(new_data)
+        print(data)
+        # r.seek(0)
+        # json.dump(data, r)
+
+    r.close()
+  
+
 
 main()
