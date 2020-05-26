@@ -3,6 +3,7 @@ import time
 import os
 import string
 import random
+from datetime import date
 # main function
 
 
@@ -27,9 +28,9 @@ def main():
             help()
         if action == 'show':
             show()
-        if action == 'addTask':
-            addTask()
-        if action == 'showDateTime':
+        if action == 'add':
+            add_task()
+        if action == 'time':
             show_time()
         if action == 'done':
             done()
@@ -58,10 +59,13 @@ def init():
 
 
 def help():
-    print('1. help    -- show all the commands ')
-    print('2. show    -- show all the tasks ')
-    print('3. addTask -- add new task to tasks ')
-    print('4. quit!   -- quit without saving ')
+    print('1. help  -- show all the commands ')
+    print('2. show  -- show all the tasks ')
+    print('3. add   -- add new task to tasks ')
+    print('4. time  -- show current date and time ')
+    print('5. done  -- change the task status to done ')
+    print('6. quit! -- quit without saving ')
+    print('7. q!    -- quit without saving ')
     print('')
 
 
@@ -79,10 +83,6 @@ def show():
     print('+-------------------------------------------------------------------------------+')
 
 
-def addTask():
-    pass
-
-
 def show_time():
     localtime = time.asctime(time.localtime(time.time()))
     print("Current time :", localtime)
@@ -93,7 +93,7 @@ def generate_unique_id():
     # with 32 characters.
     unique_id = ''.join(
         [random.choice(string.ascii_letters + string.digits) for n in range(5)])
-    print(unique_id)
+    return unique_id
 
 
 def done():
@@ -110,12 +110,22 @@ def done():
     print('')
     print('>>Choose task to change status to done (write unique id)')
     un_id = input('>>:')
+    # for do in data:
+    #     do.pop('{un_id}', None)
 
-    for do in data:
-        do.pop('{un_id}', None)
+    # with open('../data.json', 'w') as w:
+    #     data = json.dump(data, w)
+
+
+def add_task():
+    with open('../data.json', 'r+') as r:
+        data = json.load(r)
+        today = date.today()
+        new_data = {"unique id": generate_unique_id(), "id": 1, "task": "test", "status":"test","start date": "02/02/2020",
+    "end date": "02/02/2020"}
+        data.append(new_data)
+        r.seek(0)
+        json.dump(data, r)
     
-    with open('../data.json', 'w') as w:
-        data = json.dump(data, w)
-
 
 main()
