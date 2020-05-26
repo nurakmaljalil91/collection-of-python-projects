@@ -1,7 +1,8 @@
 import json
 import time
 import os
-
+import string
+import random
 # main function
 
 
@@ -30,6 +31,8 @@ def main():
             addTask()
         if action == 'showDateTime':
             show_time()
+        if action == 'done':
+            done()
         else:
             print('Command not found! (type help to show all commands)')
         print('')
@@ -70,7 +73,8 @@ def show():
     print('+-------------------------------------------------------------------------------+')
     num_task = 1
     for d in data:
-        print('{}.{:30}|{:15}|{:15}|{:15}|         '.format(num_task, d['task'], d['end date'],d['status'],2 ))
+        print('{}.{:30}|{:15}|{:15}|{:15}|         '.format(
+            num_task, d['task'], d['end date'], d['status'], 2))
         num_task += 1
     print('+-------------------------------------------------------------------------------+')
 
@@ -82,6 +86,36 @@ def addTask():
 def show_time():
     localtime = time.asctime(time.localtime(time.time()))
     print("Current time :", localtime)
+
+
+def generate_unique_id():
+    # Generate a random string
+    # with 32 characters.
+    unique_id = ''.join(
+        [random.choice(string.ascii_letters + string.digits) for n in range(5)])
+    print(unique_id)
+
+
+def done():
+    with open('../data.json', 'r') as r:
+        data = json.load(r)
+    print('+-----------------------------------------------+')
+    print('|\t Task \t\t\t| Unique Id     |')
+    print('+-----------------------------------------------+')
+    num_task = 1
+    for d in data:
+        print('{}.{:30}|{:15}|'.format(num_task, d['task'], d['unique id']))
+        num_task += 1
+    print('+-----------------------------------------------+')
+    print('')
+    print('>>Choose task to change status to done (write unique id)')
+    un_id = input('>>:')
+
+    for do in data:
+        do.pop('{un_id}', None)
+    
+    with open('../data.json', 'w') as w:
+        data = json.dump(data, w)
 
 
 main()
