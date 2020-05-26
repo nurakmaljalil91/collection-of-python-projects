@@ -11,6 +11,8 @@ def main():
     while is_running:
         print('>>Enter your command here')
         action = input('>>:')
+        if action == 'init':
+            init()
         if action == 'quit!' or action == 'q!':
             is_running = False
         if action == 'q':
@@ -22,6 +24,8 @@ def main():
             show()
         if action == 'addTask':
             addTask()
+        else:
+            print('Command not found! (type help to show all commands)')
         print('')
 
     print('TODO is exiting.......')
