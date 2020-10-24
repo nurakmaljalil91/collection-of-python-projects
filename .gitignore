@@ -34,3 +34,10 @@
 .idea/
 venv/
 _pycache_/
+
+flask_web_api/venv
+flask_web_api/.idea
+
+web_api_test/venv
+
+todo_py/__pycache__
